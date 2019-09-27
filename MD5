@@ -1,0 +1,13 @@
+e26aa477537e6d2f640266022e0151f6 *DESCRIPTION
+ddce70059991d58c7dbf90cd08d7ed59 *NAMESPACE
+2fac7d86867a0a4c0f47c9067c833d9f *NEWS.md
+6f27988c13773c4457142f1d824f9302 *R/glmpca.R
+03bf6593526ca7a1f096a2c9a60e1d39 *README.md
+eea7b2e25c7d2a7c0a174030ead193a7 *build/vignette.rds
+b15cab4340fd58d61b0bab57a9bda162 *inst/doc/glmpca.R
+c68a861c46755d5b9cfbb85fbf08b42b *inst/doc/glmpca.Rmd
+2f841b7e3c2693f7c3342b07b372813c *inst/doc/glmpca.html
+79e34c24bed6dbee0bf39b915f7f29dc *man/glmpca.Rd
+a82052ee8a5bd7a4353a9bf09052976f *tests/testthat.R
+98d094a479dfaaac1509681fa7d4b888 *tests/testthat/test_glmpca.R
+c68a861c46755d5b9cfbb85fbf08b42b *vignettes/glmpca.Rmd
