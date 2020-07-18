@@ -1,8 +1,8 @@
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 library(ggplot2); theme_set(theme_bw())
 require(glmpca)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 set.seed(202)
 ngenes <- 5000 #must be divisible by 10
 ngenes_informative<-ngenes*.1
@@ -32,35 +32,41 @@ z<-log10(sz)
 pz<-1-colMeans(Y>0)
 cm<-data.frame(total_counts=sz,zero_frac=pz,clust=factor(clust),batch=factor(batch))
 
-## ---- fig.width=6, fig.height=15-----------------------------------------
-L<-2 #number of latent dimensions
-
-#Poisson likelihood
-system.time(res1<-glmpca(Y,L,fam="poi",verbose=TRUE)) #about 4 seconds
+## ---- fig.width=6, fig.height=4-----------------------------------------------
+set.seed(202)
+system.time(res1<-glmpca(Y,2,fam="poi")) #about 9 seconds
+print(res1)
 pd1<-cbind(cm,res1$factors,dimreduce="glmpca-poi")
+#check optimizer decreased deviance
+plot(res1$dev,type="l",xlab="iterations",ylab="Poisson deviance")
 
-#negative binomial likelihood
-system.time(res2<-glmpca(Y,L,fam="nb",verbose=TRUE)) #about 6 seconds
+## ---- fig.width=6, fig.height=4-----------------------------------------------
+set.seed(202)
+system.time(res2<-glmpca(Y,2,fam="nb")) #about 32 seconds
+print(res2)
 pd2<-cbind(cm,res2$factors,dimreduce="glmpca-nb")
+#check optimizer decreased deviance
+plot(res2$dev,type="l",xlab="iterations",ylab="negative binomial deviance")
 
+## -----------------------------------------------------------------------------
 #standard PCA
-system.time(res3<-prcomp(log2(1+t(Ycpm)),center=TRUE,scale.=TRUE,rank.=L)) #<0.5 sec
+system.time(res3<-prcomp(log2(1+t(Ycpm)),center=TRUE,scale.=TRUE,rank.=2)) #<1 sec
 pca_factors<-res3$x
-colnames(pca_factors)<-paste0("dim",1:L)
+colnames(pca_factors)<-paste0("dim",1:2)
 pd3<-cbind(cm,pca_factors,dimreduce="pca-logcpm")
-pd<-rbind(pd1,pd2,pd3)
 
+## ---- fig.width=6, fig.height=15----------------------------------------------
+pd<-rbind(pd1,pd2,pd3)
 #visualize results
 ggplot(pd,aes(x=dim1,y=dim2,colour=clust,shape=batch))+geom_point(size=4)+facet_wrap(~dimreduce,scales="free",nrow=3)
 
-## ---- fig.width=6, fig.height=4------------------------------------------
+## ---- fig.width=6, fig.height=4-----------------------------------------------
 nbres<-res2
-names(nbres) #glmpca returns a list
+names(nbres)
 dim(Y)
 dim(nbres$factors)
 dim(nbres$loadings)
 dim(nbres$coefX)
 hist(nbres$coefX[,1],breaks=100,main="feature-specific intercepts")
-plot(nbres$dev,type="b",main="trace plot of glmpca optimization",xlab="iteration")
-nbres$family
+print(nbres$glmpca_family)
 

@@ -3,12 +3,22 @@
 [![Build Status](https://travis-ci.com/willtownes/glmpca.svg?token=o1x5ZKVR5sA6MpqhDnQX&branch=master)](https://travis-ci.com/willtownes/glmpca)
 [![codecov](https://codecov.io/gh/willtownes/glmpca/branch/master/graph/badge.svg)](https://codecov.io/gh/willtownes/glmpca)
 
-Generalized PCA for non-normally distributed data. If you find this useful please cite [Feature Selection and Dimension Reduction based on a Multinomial Model](https://www.biorxiv.org/content/10.1101/574574v1).
+Generalized PCA for non-normally distributed data. If you find this useful please cite [Feature Selection and Dimension Reduction based on a Multinomial Model.](https://doi.org/10.1186/s13059-019-1861-6) (doi:10.1186/s13059-019-1861-6)
+
+A [python implementation](https://github.com/willtownes/glmpca-py) is also available.
 
 ## Installation
 
+The [glmpca package](https://CRAN.R-project.org/package=glmpca) is available from CRAN. To install the stable release (recommended):
+
 ```r
-devtools::install_github("willtownes/glmpca")
+install.packages("glmpca")
+```
+
+To install the development version:
+
+```r
+remotes::install_github("willtownes/glmpca")
 ```
 
 ## Usage
@@ -29,7 +39,10 @@ factors<-res$factors
 plot(factors[,1],factors[,2],col=clust,pch=19)
 ```
 
-For more details see the vignettes.
+For more details see the vignettes. For compatibility with Bioconductor, see
+[scry](https://bioconductor.org/packages/release/bioc/html/scry.html). 
+For compatibility with Seurat objects, 
+see [Seurat-wrappers](https://github.com/satijalab/seurat-wrappers).
 
 ## Issues and bug reports
 
